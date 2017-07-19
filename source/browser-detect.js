@@ -8,7 +8,8 @@ window.browserDetect = (function() {
 			edge: /edge\/[0-9.]+/,
 			safari: /version\/[0-9.]+/,
 			chrome: /chrome\/[0-9.]+/,
-			firefox: /firefox\/[0-9.]+/
+			firefox: /firefox\/[0-9.]+/,
+			chromeiOS: /crios\/[0-9.]+/
 		};
 
 		var browserInfo = {
@@ -32,6 +33,15 @@ window.browserDetect = (function() {
 				browserInfo.name = 'safari';
 
 				browserInfo.versionString = ua.match(matchStr.safari).toString().replace(/version\//, '');
+			}
+		}
+
+		// check for Chrome on iOS
+		if (ua.indexOf('crios') !== -1) {
+			browserInfo.name = 'chrome-ios';
+			
+			if (ua.match(matchStr.chromeiOS)) {
+				browserInfo.versionString = ua.match(matchStr.chromeiOS).toString().replace(/crios\//, '');
 			}
 		}
 

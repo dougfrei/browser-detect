@@ -1,6 +1,6 @@
 {
   "name": "browser-detect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Attempt to detect browser vendor and version through UA sniffing",
   "main": "gulpfile.js",
   "dependencies": {},
