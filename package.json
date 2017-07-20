@@ -1,25 +1,30 @@
 {
-  "name": "browser-detect",
-  "version": "1.0.1",
-  "description": "Attempt to detect browser vendor and version through UA sniffing",
-  "main": "gulpfile.js",
-  "dependencies": {},
-  "devDependencies": {
-    "browser-sync": "^2.18.12",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.7.0",
-    "gulp": "^3.9.0",
-    "gulp-eslint": "^4.0.0",
-    "gulp-header": "^1.8.8",
-    "gulp-load-plugins": "^1.1.0",
-    "gulp-notify": "^2.2.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.4.0",
-    "gulp-uglify": "^2.0.0"
-  },
-  "scripts": {},
-  "author": "Doug Frei <dougfrei@gmail.com>",
-  "license": "ISC"
+    "name": "browser-detect",
+    "version": "1.0.1",
+    "description": "Attempt to detect browser vendor and version through UA sniffing",
+    "main": "gulpfile.js",
+    "dependencies": {},
+    "devDependencies": {
+        "browser-sync": "^2.18.12",
+        "eslint": "^3.19.0",
+        "eslint-config-airbnb-base": "^11.2.0",
+        "eslint-plugin-import": "^2.7.0",
+        "gulp": "^3.9.0",
+        "gulp-eslint": "^4.0.0",
+        "gulp-header": "^1.8.8",
+        "gulp-load-plugins": "^1.1.0",
+        "gulp-notify": "^2.2.0",
+        "gulp-plumber": "^1.1.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-sourcemaps": "^2.4.0",
+        "gulp-uglify": "^2.0.0"
+    },
+    "scripts": {},
+    "author": "Doug Frei <dougfrei@gmail.com>",
+    "license": "ISC",
+    "repository": {
+		"type": "git",
+		"url": "https://github.com/dougfrei/browser-detect.git"
+    },
+	"homepage": "https://github.com/dougfrei/browser-detect"
 }

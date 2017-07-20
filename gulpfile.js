@@ -20,6 +20,7 @@ gulp.task('build', function() {
     const banner = [
         '/**',
         ' * <%= pkg.description %> v<%= pkg.version %> | <%= pkg.license %>',
+		' * Author: <%= pkg.author %>',
         ' * <%= pkg.homepage %>',
         ' */',
         ''
