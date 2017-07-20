@@ -39,7 +39,7 @@ window.browserDetect = (function() {
 		// check for Chrome on iOS
 		if (ua.indexOf('crios') !== -1) {
 			browserInfo.name = 'chrome-ios';
-			
+
 			if (ua.match(matchStr.chromeiOS)) {
 				browserInfo.versionString = ua.match(matchStr.chromeiOS).toString().replace(/crios\//, '');
 			}
@@ -117,10 +117,10 @@ window.browserDetect = (function() {
 		addBrowserClasses: function(ua) {
 			var bi = this.getBrowserInfo(ua);
 
-			var headEl = document.querySelector('head');
-			headEl.classList.add('browser-'+bi.name);
-			headEl.classList.add('browser-'+bi.name+'-'+bi.version.major);
-			// headEl.classList.add('browser-'+bi.name+'-'+bi.version.major+'-'+bi.version.minor);
+			var htmlTag = document.querySelector('html');
+			htmlTag.classList.add('browser-'+bi.name);
+			htmlTag.classList.add('browser-'+bi.name+'-'+bi.version.major);
+			// htmlTag.classList.add('browser-'+bi.name+'-'+bi.version.major+'-'+bi.version.minor);
 		},
 		// getOSInfo: function(platform) {
 		// 	if (platform === undefined) { platform = window.navigator.platform; }
@@ -130,8 +130,8 @@ window.browserDetect = (function() {
 		// addOSClasses: function(platform) {
 		// 	var osi = this.getOSInfo(platform);
 		//
-		// 	var headEl = document.querySelector('head');
-		// 	headEl.classList.add('os-'+osi);
+		// 	var htmlTag = document.querySelector('head');
+		// 	htmlTag.classList.add('os-'+osi);
 		// }
 	}
 })();
