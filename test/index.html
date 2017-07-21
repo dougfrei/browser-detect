@@ -3,44 +3,83 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Browser Detect</title>
+		<style>
+			pre {
+				display: inline-block;
+				background: #000;
+				color: #fff;
+				padding: 0.5rem;
+				margin: 0;
+			}
+
+			fieldset {
+				display: block;
+				margin-top: 2rem;
+			}
+		</style>
 	</head>
 	<body>
-		<p class="ua-string"></p>
-		<table>
-			<tbody>
-				<tr>
-					<td>Browser Name</td>
-					<td class="browser-name"></td>
-				</tr>
-				<tr>
-					<td>Browser Version</td>
-					<td class="browser-version"></td>
-				</tr>
-				<!-- <tr>
-					<td>OS Name</td>
-					<td class="os-name"></td>
-				</tr>
-				<tr>
-					<td>OS Version</td>
-					<td class="os-version"></td>
-				</tr> -->
-			</tbody>
-		</table>
-		<p>html classes</p>
-		<pre class="html-classes"></pre>
+		<fieldset>
+			<legend>Browser Reported Values</legend>
+
+			<table>
+				<tbody>
+					<tr>
+						<td>UA String</td>
+						<td><pre class="ua-string"></pre></td>
+					</tr>
+					<tr>
+						<td>Platform</td>
+						<td><pre class="platform"></pre></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+
+		<fieldset>
+			<legend>Browser Detect Processed Values</legend>
+			<table>
+				<tbody>
+					<tr>
+						<td>Browser Name</td>
+						<td><pre class="browser-name"></pre></td>
+					</tr>
+					<tr>
+						<td>Browser Version</td>
+						<td><pre class="browser-version"></pre></td>
+					</tr>
+					<tr>
+						<td>OS Name</td>
+						<td><pre class="os-name"></pre></td>
+					</tr>
+					<tr>
+						<td>OS Version</td>
+						<td><pre class="os-version"></pre></td>
+					</tr>
+					<tr>
+						<td>HTML classes</td>
+						<td><pre class="html-classes"></pre></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
 	</body>
 	<script src="dist/browser-detect.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		document.querySelector('.ua-string').textContent = window.navigator.userAgent;
-
 		var bi = browserDetect.getBrowserInfo();
+		var osInfo = browserDetect.getOSInfo();
+
 		browserDetect.addBrowserClasses();
-		// browserDetect.addOSClasses();
+		browserDetect.addOSClasses();
+
+		document.querySelector('.ua-string').textContent = window.navigator.userAgent;
+		document.querySelector('.platform').textContent = window.navigator.platform;
+		document.querySelector('.html-classes').textContent = document.querySelector('html').classList.toString();
 
 		document.querySelector('.browser-name').textContent = bi.name;
 		document.querySelector('.browser-version').textContent = bi.versionString;
 
-		// document.querySelector('.os-name').textContent = bi.os;
-		// document.querySelector('.os-version').textContent = bi.osVersion;
+		document.querySelector('.os-name').textContent = osInfo.name;
+		document.querySelector('.os-version').textContent = osInfo.versionString;
 	</script>
 </html>

@@ -9,7 +9,8 @@ window.browserDetect = (function() {
 			safari: /version\/[0-9.]+/,
 			chrome: /chrome\/[0-9.]+/,
 			firefox: /firefox\/[0-9.]+/,
-			chromeiOS: /crios\/[0-9.]+/
+			chromeiOS: /crios\/[0-9.]+/,
+			firefoxiOS: /fxios\/[0-9.]+/
 		};
 
 		var browserInfo = {
@@ -54,6 +55,15 @@ window.browserDetect = (function() {
 			}
 		}
 
+		// check for Firefox on iOS
+		if (ua.indexOf('fxios') !== -1) {
+			browserInfo.name = 'firefox-ios';
+
+			if (ua.match(matchStr.firefoxiOS)) {
+				browserInfo.versionString = ua.match(matchStr.firefoxiOS).toString().replace(/fxios\//, '');
+			}
+		}
+
 		// check for IE
 		if (ua.indexOf('trident') !== -1) {
 			browserInfo.name = 'ie';
@@ -86,27 +96,69 @@ window.browserDetect = (function() {
 		return browserInfo;
 	};
 
-	// var _getOSInfo = function(platform) {
-	// 	platform = platform.toLowerCase();
-	//
-	// 	if (platform.search('win') >= 0) {
-	//         return 'windows';
-	//     }
-	//
-	//     if (platform.search('mac') >= 0) {
-	//         return 'osx';
-	//     }
-	//
-	//     if (ua.search('iphone') >= 0){
-	//         return 'ios';
-	//     }
-	//
-	//     if (platform.search('linux') >= 0) {
-	//         return 'linux';
-	//     }
-	//
-	// 	return '';
-	// };
+	var _getOSInfo = function(platform, ua) {
+		var osInfo = {
+			name: '',
+			versionString: '',
+			versionClass: '',
+			version: {
+				major: 0,
+				minor: 0
+			},
+		}
+
+		var verStrReplace = '';
+		var uaMatch = false;
+
+		platform = platform.toLowerCase();
+
+
+		if (platform.search('linux') >= 0) {
+			osInfo.name = 'linux';
+
+			uaMatch = ua.match(/Android (\d+).(\d+)/);
+
+			if (uaMatch) {
+				osInfo.name = 'android';
+				verStrReplace = 'Android ';
+			}
+		}
+
+		if (platform.search('win') >= 0) {
+			osInfo.name = 'win';
+
+			// TODO: add windows version numbers
+		}
+
+		if (platform.search('mac') >= 0) {
+			osInfo.name = 'osx';
+
+			uaMatch = ua.match(/OS X (\d+).(\d+)/);
+
+			if (uaMatch) {
+				verStrReplace = 'OS X ';
+			}
+		}
+
+		if (platform.search('iphone') >= 0 || platform.search('ipad') >= 0) {
+			osInfo.name = 'ios';
+
+			uaMatch = ua.match(/OS (\d+).(\d+)/);
+
+			if (uaMatch) {
+				verStrReplace = 'OS ';
+			}
+		}
+
+		if (uaMatch) {
+			osInfo.versionString = (uaMatch && verStrReplace) ? uaMatch[0].toString().replace(verStrReplace, '') : '';
+			osInfo.version.major = (uaMatch.length >= 2) ? uaMatch[1] : '';
+			osInfo.version.minor = (uaMatch.length >= 3) ? uaMatch[2] : '';
+		}
+
+
+		return osInfo;
+	};
 
 	return {
 		getBrowserInfo: function(ua) {
@@ -122,16 +174,27 @@ window.browserDetect = (function() {
 			htmlTag.classList.add('browser-'+bi.name+'-'+bi.version.major);
 			// htmlTag.classList.add('browser-'+bi.name+'-'+bi.version.major+'-'+bi.version.minor);
 		},
-		// getOSInfo: function(platform) {
-		// 	if (platform === undefined) { platform = window.navigator.platform; }
-		//
-		// 	return _getOSInfo(platform);
-		// },
-		// addOSClasses: function(platform) {
-		// 	var osi = this.getOSInfo(platform);
-		//
-		// 	var htmlTag = document.querySelector('head');
-		// 	htmlTag.classList.add('os-'+osi);
-		// }
+		getOSInfo: function(platform, ua) {
+			if (platform === undefined) { platform = window.navigator.platform; }
+			if (ua === undefined) { ua = window.navigator.userAgent; }
+
+			return _getOSInfo(platform, ua);
+		},
+		addOSClasses: function(platform, ua) {
+			var osInfo = this.getOSInfo(platform, ua);
+
+			if (osInfo.name) {
+				var htmlTag = document.querySelector('html');
+				htmlTag.classList.add('os-'+osInfo.name);
+
+				if (osInfo.version.major) {
+					htmlTag.classList.add('os-'+osInfo.name+'-'+osInfo.version.major);
+				}
+
+				if (osInfo.version.major && osInfo.version.minor) {
+					htmlTag.classList.add('os-'+osInfo.name+'-'+osInfo.version.major+'-'+osInfo.version.minor);
+				}
+			}
+		}
 	}
 })();
